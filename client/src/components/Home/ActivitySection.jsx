@@ -2,7 +2,7 @@ import React from 'react';
 
 const ActivitySection = () => {
   return (
-    <section className="py-16 px-4 md:px-8 max-w-6xl mx-auto flex">
+    <section className="py-16 px-4 md:px-8 max-w-6xl mx-auto md:flex">
       <div className="mb-8">
         <div className="w-16 h-1 bg-red-500 mb-4"></div>
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Activity</h2>
@@ -17,7 +17,7 @@ const ActivitySection = () => {
         </a>
       </div>
 
-        <div className="flex">
+        <div className="md:flex">
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-white p-6 rounded-lg shadow-md">
