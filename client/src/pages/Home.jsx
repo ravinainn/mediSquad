@@ -6,7 +6,6 @@ import ActivitySection from "../components/Home/ActivitySection";
 const Home = () => {
   return (
     <div>
-      <h1>MediSquad</h1>
       <Hero />
       <ActivitySection />
       <Footer />
