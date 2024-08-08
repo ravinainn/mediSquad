@@ -1,6 +1,8 @@
-import React from 'react';
-import doc from '../../../public/img/hero.png';
-import Nav from './nav';
+import React from "react";
+import doc from "../../../public/img/hero.png";
+import Nav from "./nav";
+
+import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <div className="bg-white overflow-hidden">
@@ -15,9 +17,11 @@ const Hero = () => {
             We are your partners in your optimal health!
           </p>
           <div className="space-x-4">
-            <button className="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600">
-              Join Us
-            </button>
+            <Link to="/consult">
+              <button className="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600">
+                Consult Now
+              </button>
+            </Link>
             <button className="border border-gray-300 text-gray-600 px-6 py-3 rounded-full hover:bg-gray-100">
               Learn More
             </button>
@@ -25,7 +29,7 @@ const Hero = () => {
         </div>
         <div className="md:w-1/2 relative">
           <img
-            src = {doc}
+            src={doc}
             alt="Doctor"
             className="md:h-auto md:max-w-lg md:ml-auto ml-0  z-10 relative"
           />
