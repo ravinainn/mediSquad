@@ -16,6 +16,12 @@ export const createConsultation = async (req, res) => {
       createdBy,
       doctorSpeciality,
     });
+
+    // Initiate Payment
+    // const paymentResponse = await createPayment({
+    //   amount:1000,
+    //   currency:
+    // })
   } catch (error) {}
 };
 
