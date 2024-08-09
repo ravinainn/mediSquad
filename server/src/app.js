@@ -5,7 +5,7 @@ import connectDB from "./config/database.js";
 import { initializeSocket } from "./services/socketService.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
-import doctorRoutes from "./routes/doctor.js";
+import doctorRoutes from "./routes/admin.js";
 import adminRoutes from "./routes/admin.js";
 import consultationRoutes from "./routes/consultation.js";
 
