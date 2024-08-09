@@ -1,15 +1,19 @@
 import express from "express";
-import dotenv from "dotenv";
 import http from "http";
-import connectDB from "./config/database";
+import dotenv from "dotenv";
+import connectDB from "./config/database.js";
+
+import userRoute from "./routes/user.js";
+import doctorRoute from "./routes/doctor.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
-// const server = http.createServer(app);
+const server = http.createServer(app);
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.use("/api/user", userRoute);
+app.use("/api/doctor", doctorRoute);
+
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
