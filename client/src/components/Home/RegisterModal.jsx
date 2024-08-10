@@ -10,7 +10,9 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
     phone: '',
     gender: '',
     aadhar: '',
-    specialization: '',
+    speciality: '',
+    licenseNumber: '',
+    passKey: '',
   });
   const [responseMessage, setResponseMessage] = useState('');
 
@@ -20,12 +22,22 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (isDoctor) {
-      console.log('Registering as doctor', formData);
-      // doctor registration logic here
-    } else {
-      try {
-        const res = await axios.post(
+    try {
+      let res;
+      if (isDoctor) {
+        res = await axios.post(
+          "http://localhost:5001/api/doctor/register",
+          {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            speciality: formData.speciality,
+            licenseNumber: formData.licenseNumber,
+            passKey: formData.passKey,
+          }
+        );
+      } else {
+        res = await axios.post(
           "http://localhost:5001/api/user/register",
           {
             name: formData.name,
@@ -33,15 +45,14 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             password: formData.password,
           }
         );
-        setResponseMessage(`Success! Token: ${res.data.token}`);
-        //successful registration here (e.g., close modal, navigate to login)
-        setTimeout(() => {
-          onClose();
-          onNavigateToLogin();
-        }, 2000);
-      } catch (error) {
-        setResponseMessage(error.response?.data?.message || "An error occurred");
       }
+      setResponseMessage(`Success! Token: ${res.data.token}`);
+      setTimeout(() => {
+        onClose();
+        onNavigateToLogin();
+      }, 2000);
+    } catch (error) {
+      setResponseMessage(error.response?.data?.message || "An error occurred");
     }
   };
 
@@ -117,7 +128,7 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             />
           </div>
 
-          {/* Additional fields (only shown for user registration) */}
+          {/* Additional fields for user registration */}
           {!isDoctor && (
             <>
               <div className="mb-4">
@@ -168,19 +179,50 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
 
           {/* Conditional Fields for Doctors */}
           {isDoctor && (
-            <div className="mb-4">
-              <label htmlFor="specialization" className="block text-gray-700 font-bold mb-2">
-                Specialization
-              </label>
-              <input
-                type="text"
-                id="specialization"
-                name="specialization"
-                className="border border-gray-300 p-2 rounded-lg w-full"
-                value={formData.specialization}
-                onChange={handleChange}
-              />
-            </div>
+            <>
+              <div className="mb-4">
+                <label htmlFor="speciality" className="block text-gray-700 font-bold mb-2">
+                  Speciality
+                </label>
+                <input
+                  type="text"
+                  id="speciality"
+                  name="speciality"
+                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  value={formData.speciality}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="licenseNumber" className="block text-gray-700 font-bold mb-2">
+                  License Number
+                </label>
+                <input
+                  type="text"
+                  id="licenseNumber"
+                  name="licenseNumber"
+                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  value={formData.licenseNumber}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="passKey" className="block text-gray-700 font-bold mb-2">
+                  Pass Key
+                </label>
+                <input
+                  type="password"
+                  id="passKey"
+                  name="passKey"
+                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  value={formData.passKey}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </>
           )}
 
           {/* Register Button */}

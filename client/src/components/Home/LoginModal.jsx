@@ -19,27 +19,34 @@ const LoginModal = ({ onClose }) => {
     e.preventDefault();
     setResponseMessage("");
 
-    if (loginType === "patient") {
-      try {
-        const res = await axios.post(
+    try {
+      let res;
+      if (loginType === "patient") {
+        res = await axios.post(
           "http://localhost:5001/api/user/login",
           formData
         );
         localStorage.setItem("userToken", res.data.token);
-        setResponseMessage(`Success! Token: ${res.data.token}`);
-        // You might want to handle successful login here (e.g., store token, redirect)
-        setTimeout(() => {
-          onClose();
-        }, 2000);
-      } catch (error) {
-        setResponseMessage(
-          error.response?.data?.message || "An error occurred"
+      } else if (loginType === "doctor") {
+        res = await axios.post(
+          "http://localhost:5001/api/doctor/login",
+          formData
         );
+        localStorage.setItem("doctorToken", res.data.token);
+      } else {
+        // Handle admin login
+        console.log("Admin login not implemented yet");
+        return;
       }
-    } else {
-      // Handle doctor and admin login separately
-      console.log("Logging in as", loginType, "with", formData);
-      // Implement doctor and admin login logic here
+      
+      setResponseMessage("Login successful!");
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    } catch (error) {
+      setResponseMessage(
+        error.response?.data?.message || "An error occurred"
+      );
     }
   };
 
