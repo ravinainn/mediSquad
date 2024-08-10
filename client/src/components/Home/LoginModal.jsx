@@ -82,7 +82,7 @@ const LoginModal = ({ onClose }) => {
                 Patient
               </button>
               <button
-                className={`px-4 py-2 ${
+                className={`px-4 py-2 rounded-r-lg ${
                   loginType === "doctor"
                     ? "bg-teal-500 text-white"
                     : "bg-gray-200 text-gray-600"
@@ -91,7 +91,7 @@ const LoginModal = ({ onClose }) => {
               >
                 Doctor
               </button>
-              <button
+              {/* <button
                 className={`px-4 py-2 rounded-r-lg ${
                   loginType === "admin"
                     ? "bg-teal-500 text-white"
@@ -100,7 +100,7 @@ const LoginModal = ({ onClose }) => {
                 onClick={() => setLoginType("admin")}
               >
                 Admin
-              </button>
+              </button> */}
             </div>
 
             <form onSubmit={handleLogin}>
