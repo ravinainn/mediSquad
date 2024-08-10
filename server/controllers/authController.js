@@ -67,7 +67,7 @@ export const DoctorLogin = async (req, res) => {
 export const doctorLogout = async (req, res) => {
   try {
     // Assuming the doctor's ID is available in the req.user object after authentication
-    const doctorId = req.user._id;
+    const doctorId = req.doctor._id;
 
     // Find the doctor by ID and update the status to 'inactive'
     const doctor = await Doctor.findByIdAndUpdate(
