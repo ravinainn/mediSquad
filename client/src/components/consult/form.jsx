@@ -1,29 +1,44 @@
 import React, { useState } from 'react';
 import { Link, Element } from 'react-scroll';
+import axios from "axios";
 
 const Form = () => {
     const [formData, setFormData] = useState({
-        patientName: '',
-        patientEmail: '',
-        patientPhone: '',
-        appointmentDate: '',
-        appointmentTime: '',
-        additionalInfo: '',
-        bloodGroup: '',
-        weight: '',
+        name: "",
+        age: "",
+        gender: "",
+        contact: "",
+        aadharNumber: "",
+        speciality: "",
     });
 
-    const handleInputChange = (e) => {
+    const [roomUrl, setRoomUrl] = useState("");
+
+    const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
-        // You can add your logic to submit the form here
+        try {
+            const token = localStorage.getItem("userToken"); // Assuming user is logged in
+            const res = await axios.post(
+                "http://localhost:5001/api/appointment/create",
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            setRoomUrl(res.data.roomUrl);
+        } catch (error) {
+            console.error("Error creating appointment:", error);
+        }
     };
 
     return (
@@ -37,110 +52,94 @@ const Form = () => {
                                 Patient Name
                             </label>
                             <input
-                                type="text"
                                 id="patientName"
-                                name="patientName"
-                                value={formData.patientName}
-                                onChange={handleInputChange}
+                                type="text"
+                                name="name"
+                                placeholder="Patient Name"
+                                onChange={handleChange}
+                                value={formData.name}
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                                placeholder="Enter patient's name"
                             />
                         </div>
                         <div>
                             <label htmlFor="patientEmail" className="block text-lg font-medium text-gray-700">
-                                Patient Email
+                                Age
                             </label>
                             <input
-                                type="email"
                                 id="patientEmail"
-                                name="patientEmail"
-                                value={formData.patientEmail}
-                                onChange={handleInputChange}
+                                type="number"
+                                name="age"
+                                onChange={handleChange}
+                                value={formData.age}
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                                placeholder="Enter patient's email"
+                                placeholder="Age"
                             />
                         </div>
                         <div>
+                            <label htmlFor="bloodGroup" className="block text-lg font-medium text-gray-700">
+                                Gender
+                            </label>
+                            <select
+                                id="bloodGroup"
+                                name="gender"
+                                onChange={handleChange}
+                                value={formData.gender}
+                                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
+                            >
+                                <option value="" disabled>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
                             <label htmlFor="patientPhone" className="block text-lg font-medium text-gray-700">
-                                Patient Phone
+                                Contact No.
                             </label>
                             <input
-                                type="tel"
                                 id="patientPhone"
-                                name="patientPhone"
-                                value={formData.patientPhone}
-                                onChange={handleInputChange}
+                                type="text"
+                                name="contact"
+                                placeholder="Contact Number"
+                                onChange={handleChange}
+                                value={formData.contact}
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                                placeholder="Enter patient's phone number"
+
                             />
                         </div>
                         <div>
                             <label htmlFor="appointmentDate" className="block text-lg font-medium text-gray-700">
-                                Appointment Date
+                                Aadhar Number
                             </label>
                             <input
-                                type="date"
                                 id="appointmentDate"
-                                name="appointmentDate"
-                                value={formData.appointmentDate}
-                                onChange={handleInputChange}
+                                type="text"
+                                name="aadharNumber"
+                                placeholder="Aadhar Number"
+                                onChange={handleChange}
+                                value={formData.aadharNumber}
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
                             />
                         </div>
-                        <div>
-                            <label htmlFor="appointmentTime" className="block text-lg font-medium text-gray-700">
-                                Appointment Time
-                            </label>
-                            <input
-                                type="time"
-                                id="appointmentTime"
-                                name="appointmentTime"
-                                value={formData.appointmentTime}
-                                onChange={handleInputChange}
-                                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                            />
-                        </div>
+
                         <div>
                             <label htmlFor="additionalInfo" className="block text-lg font-medium text-gray-700">
-                                Additional Info
+                                Speciality
                             </label>
                             <textarea
                                 id="additionalInfo"
-                                name="additionalInfo"
-                                value={formData.additionalInfo}
-                                onChange={handleInputChange}
+                                type="text"
+                                name="speciality"
+                                placeholder="Speciality"
+                                onChange={handleChange}
+                                value={formData.speciality}
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                                placeholder="Enter any additional information"
+
                             ></textarea>
                         </div>
-                        <div>
-                            <label htmlFor="bloodGroup" className="block text-lg font-medium text-gray-700">
-                                Blood Group
-                            </label>
-                            <input
-                                type="text"
-                                id="bloodGroup"
-                                name="bloodGroup"
-                                value={formData.bloodGroup}
-                                onChange={handleInputChange}
-                                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                                placeholder="Enter patient's blood group"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="weight" className="block text-lg font-medium text-gray-700">
-                                Weight (kg)
-                            </label>
-                            <input
-                                type="number"
-                                id="weight"
-                                name="weight"
-                                value={formData.weight}
-                                onChange={handleInputChange}
-                                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-3"
-                                placeholder="Enter patient's weight"
-                            />
-                        </div>
+
+
                     </div>
                     <button
                         type="submit"
@@ -149,8 +148,20 @@ const Form = () => {
                         Proceed To Pay
                     </button>
                 </form>
+                {roomUrl && (
+                    <div className="mt-8">
+                        <a
+                            href={roomUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-green-500 text-white p-2 rounded"
+                        >
+                            Join Room
+                        </a>
+                    </div>
+                )}
             </div>
-        </Element> 
+        </Element>
     );
 };
 
