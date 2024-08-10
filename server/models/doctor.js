@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
 const DoctorSchema = new mongoose.Schema({
@@ -34,13 +35,18 @@ const DoctorSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  active: {
+    type: String,
+    enum: ["active", "inactive"],
+    default: "inactive",
+  },
 });
 DoctorSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
-DoctorSchema.methods.ComparePassword = async function (candidatePassword) {
+DoctorSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 const Doctor = mongoose.model("Doctor", DoctorSchema);
