@@ -1,15 +1,43 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import RegisterModal from './RegisterModal';
 
 const LoginModal = ({ onClose }) => {
   const [loginType, setLoginType] = useState('patient');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [responseMessage, setResponseMessage] = useState('');
 
-  const handleLogin = () => {
-    console.log('Logging in as', loginType, 'with', email, password);
-    onClose();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setResponseMessage('');
+
+    if (loginType === 'patient') {
+      try {
+        const res = await axios.post(
+          "http://localhost:5001/api/user/login",
+          formData
+        );
+        setResponseMessage(`Success! Token: ${res.data.token}`);
+        // You might want to handle successful login here (e.g., store token, redirect)
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      } catch (error) {
+        setResponseMessage(error.response?.data?.message || "An error occurred");
+      }
+    } else {
+      // Handle doctor and admin login separately
+      console.log('Logging in as', loginType, 'with', formData);
+      // Implement doctor and admin login logic here
+    }
   };
 
   const handleNavigateToRegister = () => {
@@ -59,39 +87,48 @@ const LoginModal = ({ onClose }) => {
               </button>
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="border border-gray-300 p-2 rounded-lg w-full"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                className="border border-gray-300 p-2 rounded-lg w-full"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+            <form onSubmit={handleLogin}>
+              <div className="mb-4">
+                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            <button
-              className="bg-teal-500 text-white px-4 py-2 rounded-lg w-full hover:bg-teal-600"
-              onClick={handleLogin}
-            >
-              Login
-            </button>
+              <button
+                type="submit"
+                className="bg-teal-500 text-white px-4 py-2 rounded-lg w-full hover:bg-teal-600"
+              >
+                Login
+              </button>
+            </form>
+
+            {responseMessage && (
+              <p className="mt-4 text-center text-red-500">{responseMessage}</p>
+            )}
+
             <div className="mt-4 text-center">
               <a
                 href="#"
