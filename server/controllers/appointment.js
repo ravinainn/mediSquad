@@ -9,7 +9,7 @@ export const createAppointment = async (req, res) => {
 
     const appointment = await Appointment.create({
       patient: { name, age, gender, contact, aadharNumber },
-      //   createdBy,
+      createdBy,
       speciality,
     });
     const roomUrl = await createRoom();

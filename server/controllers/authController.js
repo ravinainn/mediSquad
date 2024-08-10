@@ -64,6 +64,29 @@ export const DoctorLogin = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const doctorLogout = async (req, res) => {
+  try {
+    // Assuming the doctor's ID is available in the req.user object after authentication
+    const doctorId = req.doctor._id;
+
+    // Find the doctor by ID and update the status to 'inactive'
+    const doctor = await Doctor.findByIdAndUpdate(
+      doctorId,
+      { status: "inactive" },
+      { new: true }
+    );
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Logged out successfully", status: doctor.status });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
 // USER AUTH
 export const userRegister = async (req, res) => {
@@ -106,5 +129,24 @@ export const userLogin = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+export const userLogout = async (req, res) => {
+  try {
+    // Assuming the doctor's ID is available in the req.user object after authentication
+    const userId = req.user._id;
+
+    // Find the doctor by ID and update the status to 'inactive'
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Logged out successfully", status: user.status });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

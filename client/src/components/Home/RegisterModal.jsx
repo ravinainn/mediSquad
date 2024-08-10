@@ -1,26 +1,48 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const RegisterModal = ({ onClose, onNavigateToLogin }) => {
   const [isDoctor, setIsDoctor] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [gender, setGender] = useState('');
-  const [aadhar, setAadhar] = useState('');
-  const [specialization, setSpecialization] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    gender: '',
+    aadhar: '',
+    specialization: '',
+  });
+  const [responseMessage, setResponseMessage] = useState('');
 
-  const handleRegister = () => {
-    console.log('Registering as', isDoctor ? 'doctor' : 'user', 'with', {
-      name,
-      email,
-      phone,
-      password,
-      gender,
-      aadhar,
-      specialization,
-    });
-    onClose();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (isDoctor) {
+      console.log('Registering as doctor', formData);
+      // doctor registration logic here
+    } else {
+      try {
+        const res = await axios.post(
+          "http://localhost:5001/api/user/register",
+          {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }
+        );
+        setResponseMessage(`Success! Token: ${res.data.token}`);
+        //successful registration here (e.g., close modal, navigate to login)
+        setTimeout(() => {
+          onClose();
+          onNavigateToLogin();
+        }, 2000);
+      } catch (error) {
+        setResponseMessage(error.response?.data?.message || "An error occurred");
+      }
+    }
   };
 
   return (
@@ -51,7 +73,7 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
         </div>
 
         {/* Form Fields */}
-        <div>
+        <form onSubmit={handleRegister}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
               Name
@@ -59,9 +81,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             <input
               type="text"
               id="name"
+              name="name"
               className="border border-gray-300 p-2 rounded-lg w-full"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
               required
             />
           </div>
@@ -72,22 +95,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             <input
               type="email"
               id="email"
+              name="email"
               className="border border-gray-300 p-2 rounded-lg w-full"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              className="border border-gray-300 p-2 rounded-lg w-full"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
               required
             />
           </div>
@@ -98,26 +109,40 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             <input
               type="password"
               id="password"
+              name="password"
               className="border border-gray-300 p-2 rounded-lg w-full"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>
 
-          {/* Conditional Fields for Users */}
+          {/* Additional fields (only shown for user registration) */}
           {!isDoctor && (
             <>
+              <div className="mb-4">
+                <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  className="border border-gray-300 p-2 rounded-lg w-full"
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
+              </div>
               <div className="mb-4">
                 <label htmlFor="gender" className="block text-gray-700 font-bold mb-2">
                   Gender
                 </label>
                 <select
                   id="gender"
+                  name="gender"
                   className="border border-gray-300 p-2 rounded-lg w-full"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  required
+                  value={formData.gender}
+                  onChange={handleChange}
                 >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
@@ -132,10 +157,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
                 <input
                   type="text"
                   id="aadhar"
+                  name="aadhar"
                   className="border border-gray-300 p-2 rounded-lg w-full"
-                  value={aadhar}
-                  onChange={(e) => setAadhar(e.target.value)}
-                  required
+                  value={formData.aadhar}
+                  onChange={handleChange}
                 />
               </div>
             </>
@@ -150,22 +175,27 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
               <input
                 type="text"
                 id="specialization"
+                name="specialization"
                 className="border border-gray-300 p-2 rounded-lg w-full"
-                value={specialization}
-                onChange={(e) => setSpecialization(e.target.value)}
-                required
+                value={formData.specialization}
+                onChange={handleChange}
               />
             </div>
           )}
-        </div>
 
-        {/* Register Button */}
-        <button
-          className="bg-teal-500 text-white px-4 py-2 rounded-lg w-full hover:bg-teal-600"
-          onClick={handleRegister}
-        >
-          Register
-        </button>
+          {/* Register Button */}
+          <button
+            type="submit"
+            className="bg-teal-500 text-white px-4 py-2 rounded-lg w-full hover:bg-teal-600"
+          >
+            Register
+          </button>
+        </form>
+
+        {/* Response Message */}
+        {responseMessage && (
+          <p className="mt-4 text-center text-red-500">{responseMessage}</p>
+        )}
 
         {/* Navigate to Login */}
         <div className="mt-4 text-center">

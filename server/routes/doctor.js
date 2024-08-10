@@ -1,10 +1,15 @@
 import express from "express";
-import { doctorRegister, DoctorLogin } from "../controllers/authController.js";
+import {
+  doctorRegister,
+  DoctorLogin,
+  doctorLogout,
+} from "../controllers/authController.js";
 import { doctorProtected } from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/register", doctorRegister);
 router.post("/login", DoctorLogin);
+router.get("/logout", doctorProtected, doctorLogout);
 // router.get("/appointment-list",appointmentList);
 router.get("/test", doctorProtected, (req, res) => {
   res.status(200).json({
