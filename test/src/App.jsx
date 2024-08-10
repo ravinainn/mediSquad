@@ -8,6 +8,7 @@ import UserDashboard from "./components/UserDashboard";
 import UserRegister from "./components/UserRegister";
 import DoctorLogout from "./components/DoctorLogout";
 import DoctorRegister from "./components/DoctorRegister";
+import UserLogout from "./components/UserLogout";
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
           <Link to="/user-reg" className="mr-4 text-blue-500">
             User Register
           </Link>
+          <Link to="/user-logout" className="mr-4 text-blue-500">
+            User Logout
+          </Link>
         </nav>
         <Routes>
           <Route path="/create-appointment" element={<CreateAppointment />} />
@@ -48,6 +52,7 @@ function App() {
           <Route path="/doc-reg" element={<DoctorRegister />} />
           <Route path="/user-reg" element={<UserRegister />} />
           <Route path="/doctor-logout" element={<DoctorLogout />} />
+          <Route path="/user-logout" element={<UserLogout />} />
         </Routes>
       </div>
     </Router>
