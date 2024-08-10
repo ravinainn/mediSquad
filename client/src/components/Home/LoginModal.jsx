@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import RegisterModal from './RegisterModal';
+import React, { useState } from "react";
+import axios from "axios";
+import RegisterModal from "./RegisterModal";
 
 const LoginModal = ({ onClose }) => {
-  const [loginType, setLoginType] = useState('patient');
+  const [loginType, setLoginType] = useState("patient");
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [responseMessage, setResponseMessage] = useState('');
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,25 +17,28 @@ const LoginModal = ({ onClose }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setResponseMessage('');
+    setResponseMessage("");
 
-    if (loginType === 'patient') {
+    if (loginType === "patient") {
       try {
         const res = await axios.post(
           "http://localhost:5001/api/user/login",
           formData
         );
+        localStorage.setItem("userToken", res.data.token);
         setResponseMessage(`Success! Token: ${res.data.token}`);
         // You might want to handle successful login here (e.g., store token, redirect)
         setTimeout(() => {
           onClose();
         }, 2000);
       } catch (error) {
-        setResponseMessage(error.response?.data?.message || "An error occurred");
+        setResponseMessage(
+          error.response?.data?.message || "An error occurred"
+        );
       }
     } else {
       // Handle doctor and admin login separately
-      console.log('Logging in as', loginType, 'with', formData);
+      console.log("Logging in as", loginType, "with", formData);
       // Implement doctor and admin login logic here
     }
   };
@@ -63,25 +66,31 @@ const LoginModal = ({ onClose }) => {
             <div className="flex justify-center mb-4">
               <button
                 className={`px-4 py-2 rounded-l-lg ${
-                  loginType === 'patient' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-600'
+                  loginType === "patient"
+                    ? "bg-teal-500 text-white"
+                    : "bg-gray-200 text-gray-600"
                 }`}
-                onClick={() => setLoginType('patient')}
+                onClick={() => setLoginType("patient")}
               >
                 Patient
               </button>
               <button
                 className={`px-4 py-2 ${
-                  loginType === 'doctor' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-600'
+                  loginType === "doctor"
+                    ? "bg-teal-500 text-white"
+                    : "bg-gray-200 text-gray-600"
                 }`}
-                onClick={() => setLoginType('doctor')}
+                onClick={() => setLoginType("doctor")}
               >
                 Doctor
               </button>
               <button
                 className={`px-4 py-2 rounded-r-lg ${
-                  loginType === 'admin' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-600'
+                  loginType === "admin"
+                    ? "bg-teal-500 text-white"
+                    : "bg-gray-200 text-gray-600"
                 }`}
-                onClick={() => setLoginType('admin')}
+                onClick={() => setLoginType("admin")}
               >
                 Admin
               </button>
@@ -89,7 +98,10 @@ const LoginModal = ({ onClose }) => {
 
             <form onSubmit={handleLogin}>
               <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Email
                 </label>
                 <input
@@ -103,7 +115,10 @@ const LoginModal = ({ onClose }) => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Password
                 </label>
                 <input
@@ -141,7 +156,10 @@ const LoginModal = ({ onClose }) => {
           </div>
         </div>
       ) : (
-        <RegisterModal onClose={handleRegisterClose} onNavigateToLogin={handleRegisterClose} />
+        <RegisterModal
+          onClose={handleRegisterClose}
+          onNavigateToLogin={handleRegisterClose}
+        />
       )}
     </>
   );
