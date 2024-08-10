@@ -24,7 +24,7 @@ const DoctorRegister = () => {
         "http://localhost:5001/api/doctor/register",
         formData
       );
-      // setResponseMessage(`Success! Token: ${res.data.token}`);
+      setResponseMessage(`Success! Token: ${res.data.token}`);
       redirect("/login");
     } catch (error) {
       setResponseMessage(error.response.data.message || "An error occurred");
