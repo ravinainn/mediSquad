@@ -1,19 +1,12 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import doc from "../../../public/img/hero.png";
 import Nav from "./nav";
 import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
+// import RegisterModal from './RegisterModal';
 // import { Link } from "react-router-dom";
-=======
-import React from "react";
 
-import doc from "../../assets/img/hero.png";
-import Nav from "./nav";
 
-import { Link, useNavigate } from "react-router-dom";
 
->>>>>>> d1ee0331a3d6f08d7154f2436332193e5c311257
 const Hero = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
