@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from 'react';
 import doc from "../../../public/img/hero.png";
 import Nav from "./nav";
-
-import { Link } from "react-router-dom";
+import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
+// import { Link } from "react-router-dom";
 const Hero = () => {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const toggleLoginModal = () => {
+    setShowRegisterModal(false);
+    setShowLoginModal(!showLoginModal);
+  };
+  const toggleRegisterModal = () => {
+    setShowLoginModal(false);
+    setShowRegisterModal(!showRegisterModal);
+  };
+
+  const handleNavigateToLogin = () => {
+    setShowRegisterModal(false);
+    setShowLoginModal(true);
+  };
+
   return (
     <div className="bg-white overflow-hidden">
       <Nav />
@@ -17,11 +34,11 @@ const Hero = () => {
             We are your partners in your optimal health!
           </p>
           <div className="space-x-4">
-            <Link to="/consult">
-              <button className="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600">
+            
+              <button className="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600" onClick={toggleLoginModal}>
                 Consult Now
               </button>
-            </Link>
+            
             <button className="border border-gray-300 text-gray-600 px-6 py-3 rounded-full hover:bg-gray-100">
               Learn More
             </button>
@@ -33,11 +50,11 @@ const Hero = () => {
             alt="Doctor"
             className="md:h-auto md:max-w-lg md:ml-auto ml-0  z-10 relative"
           />
-          {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-teal-300 to-green-300 opacity-50 rounded-lg"></div> */}
-          {/* <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-300 rounded-full opacity-20"></div>
-          <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-blue-400 rounded-full opacity-20"></div> */}
+          
         </div>
       </main>
+      {showLoginModal && <LoginModal onClose={toggleLoginModal} />}
+      
     </div>
   );
 };
