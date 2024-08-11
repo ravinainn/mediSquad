@@ -1,6 +1,12 @@
 import React from 'react';
-
+import { useNavigate } from "react-router-dom";
 const ActivitySection = () => {
+
+  const navigate = useNavigate();
+  const handleAbout = () => {
+    navigate("/about");
+  };
+
   return (
     <section className="py-16 px-4 md:px-8 max-w-6xl mx-auto md:flex">
       <div className="mb-8">
@@ -9,7 +15,7 @@ const ActivitySection = () => {
         <p className="text-gray-600 max-w-2xl mb-6">
           Our task is Balancing Immediate Response and In-Depth Consultations in Healthcare Solutions.
         </p>
-        <a href="#" className="text-blue-600 hover:text-blue-800 inline-flex items-center">
+        <a href="#" onClick={handleAbout} className="text-blue-600 hover:text-blue-800 inline-flex items-center">
           Learn More
           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

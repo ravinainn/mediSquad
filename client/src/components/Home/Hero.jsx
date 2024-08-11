@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-// import doc from "../../../public/img/hero.png";
 import doc from "../../assets/img/hero.png";
 import Nav from "./nav";
 import LoginModal from "./LoginModal";
-// import RegisterModal from './RegisterModal';
-// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const Hero = () => {
+
+  const navigate = useNavigate();
+  const handleAbout = () => {
+    navigate("/about");
+  };
+
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const toggleLoginModal = () => {
@@ -43,7 +49,7 @@ const Hero = () => {
               Consult Now
             </button>
 
-            <button className="border border-gray-300 text-gray-600 px-6 py-3 rounded-full hover:bg-gray-100">
+            <button onClick={handleAbout} className="border border-gray-300 text-gray-600 px-6 py-3 rounded-full hover:bg-gray-100">
               Learn More
             </button>
           </div>

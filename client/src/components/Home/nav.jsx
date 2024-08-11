@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+
+    const navigate = useNavigate();
+
+    const handleChatBotClick = () => {
+      navigate("/chatbot");
+    };
+    const handleAbout = () => {
+      navigate("/about");
+    };
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
@@ -32,10 +43,11 @@ const HeroSection = () => {
           {/* <a href="#" className="text-gray-600 hover:text-gray-800">
             Product
           </a> */}
-          <a href="#" className="text-gray-600 hover:text-gray-800">
+          <a href="#" onClick={handleAbout}  className="text-gray-600 hover:text-gray-800">
             About
           </a>
-          <a href="#" className="text-gray-600 hover:text-gray-800">
+          <a href="#" onClick={handleChatBotClick} 
+        className="text-gray-600 hover:text-gray-800">
             ChatBot
           </a>
         </nav>

@@ -20,23 +20,20 @@ const ChatBox = () => {
       timestamp: "Just now",
     };
 
-    // Update the chat history with the user's message
-    setMessages([...messages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
       const response = await axios.post(
         "https://deployment-m8tj.onrender.com/chat",
         { text: inputMessage }
       );
-      console.log();
       const botMessage = {
-        text: response.data.response, // Assuming the API returns a 'response' field
+        text: response.data.response,
         sender: "bot",
         timestamp: "Just now",
       };
 
-      // Update the chat history with the bot's response
-      setMessages([...messages, userMessage, botMessage]);
+      setMessages((prevMessages) => [...prevMessages, userMessage, botMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
       const botMessage = {
@@ -44,19 +41,19 @@ const ChatBox = () => {
         sender: "bot",
         timestamp: "Just now",
       };
-      setMessages([...messages, userMessage, botMessage]);
+      setMessages((prevMessages) => [...prevMessages, userMessage, botMessage]);
     }
 
-    // Clear the input field
     setInputMessage("");
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-md">
-      <div className="bg-blue-600 text-white p-4 rounded-t-lg">
-        <h2 className="text-lg font-semibold">Chat Assistance</h2>
+    <div className="w-full max-w-4xl mx-auto bg-gray-100 rounded-lg shadow-lg flex flex-col h-screen">
+      <div className="bg-teal-600 text-white p-6 rounded-t-lg flex justify-between items-center">
+        <h2 className="text-xl font-bold">Chat Assistance</h2>
+        <span className="text-sm opacity-75">Online</span>
       </div>
-      <div className="p-4 h-64 overflow-y-auto space-y-4">
+      <div className="flex-1 overflow-y-auto p-8 bg-white space-y-6">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -65,27 +62,35 @@ const ChatBox = () => {
             }`}
           >
             <div
-              className={`max-w-xs p-3 rounded-lg text-white ${
+              className={`max-w-3xl p-6 rounded-xl shadow-lg ${
                 message.sender === "user"
-                  ? "bg-blue-500"
-                  : "bg-gray-300 text-gray-800"
+                  ? "bg-teal-600 text-white"
+                  : "bg-gray-200 text-gray-800 border border-gray-300"
               }`}
             >
-              <p>{message.text}</p>
-              <span className="text-xs block mt-2">{message.timestamp}</span>
+              <p className="text-lg">{message.text}</p>
+              <span className="text-xs block mt-2 text-gray-400">
+                {message.timestamp}
+              </span>
             </div>
           </div>
         ))}
       </div>
-      <div className="p-4 border-t">
+      <div className="p-6 border-t bg-gray-50 flex items-center space-x-4">
         <input
           type="text"
-          className="w-full p-2 border rounded-lg"
-          placeholder="Type a reply..."
+          className="flex-grow p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-600 text-lg"
+          placeholder="Type a message..."
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
         />
+        <button
+          onClick={handleSendMessage}
+          className="px-6 py-3 bg-teal-600 text-white text-lg font-semibold rounded-xl hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-600"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
