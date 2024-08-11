@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import doc from "../../../public/img/hero.png";
+import React, { useState } from "react";
+// import doc from "../../../public/img/hero.png";
+import doc from "../../assets/img/hero.png";
 import Nav from "./nav";
-import LoginModal from './LoginModal';
+import LoginModal from "./LoginModal";
 // import RegisterModal from './RegisterModal';
 // import { Link } from "react-router-dom";
-
-
 
 const Hero = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -37,11 +36,13 @@ const Hero = () => {
             We are your partners in your optimal health!
           </p>
           <div className="space-x-4">
-            
-              <button className="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600" onClick={toggleLoginModal}>
-                Consult Now
-              </button>
-            
+            <button
+              className="bg-teal-500 text-white px-6 py-3 rounded-full hover:bg-teal-600"
+              onClick={toggleLoginModal}
+            >
+              Consult Now
+            </button>
+
             <button className="border border-gray-300 text-gray-600 px-6 py-3 rounded-full hover:bg-gray-100">
               Learn More
             </button>
@@ -53,11 +54,9 @@ const Hero = () => {
             alt="Doctor"
             className="md:h-auto md:max-w-lg md:ml-auto ml-0  z-10 relative"
           />
-          
         </div>
       </main>
       {showLoginModal && <LoginModal onClose={toggleLoginModal} />}
-      
     </div>
   );
 };
