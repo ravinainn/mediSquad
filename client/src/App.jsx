@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Consult from "./pages/consult";
 import DoctorDashboard from "./components/Home/DoctorDashboard";
 import AppointmentPayment from "./pages/AppointmentPayment";
+import ChatBox from "./pages/ChatBot";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/consult" element={<Consult />} />
         <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
         <Route path="/payment" element={<AppointmentPayment />} />
+        <Route path="/chatbot" element={<ChatBox />} />
       </Routes>
     </BrowserRouter>
   );
