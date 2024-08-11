@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Form = () => {
+  const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -28,7 +29,7 @@ const Form = () => {
     try {
       const token = localStorage.getItem("userToken"); // Assuming user is logged in
       const res = await axios.post(
-        "http://localhost:5001/api/appointment/create",
+        `${apiUrl}/api/appointment/create`,
         formData,
         {
           headers: {
