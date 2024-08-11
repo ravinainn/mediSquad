@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
+import React, { useState } from "react";
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
 const HeroSection = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -22,7 +22,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="">
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="text-xl font-bold text-gray-800">MediSquad</div>
         <nav className="hidden md:flex space-x-6">
@@ -54,10 +54,13 @@ const HeroSection = () => {
           </button>
         </div>
       </header>
-      
+
       {showLoginModal && <LoginModal onClose={toggleLoginModal} />}
       {showRegisterModal && (
-        <RegisterModal onClose={toggleRegisterModal} onNavigateToLogin={handleNavigateToLogin} />
+        <RegisterModal
+          onClose={toggleRegisterModal}
+          onNavigateToLogin={handleNavigateToLogin}
+        />
       )}
     </div>
   );
