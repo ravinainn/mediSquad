@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import doc from "../../../public/img/hero.png";
 import Nav from "./nav";
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 // import { Link } from "react-router-dom";
+=======
+import React from "react";
+
+import doc from "../../assets/img/hero.png";
+import Nav from "./nav";
+
+import { Link, useNavigate } from "react-router-dom";
+
+>>>>>>> d1ee0331a3d6f08d7154f2436332193e5c311257
 const Hero = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -22,10 +32,10 @@ const Hero = () => {
   };
 
   return (
-    <div className="bg-white overflow-hidden">
+    <div className="bg-white w-screen h-screen overflow-hidden">
       <Nav />
-      <main className="container mx-auto mr-0 pl-10 py-16 flex flex-col md:flex-row h-screen items-center">
-        <div className="md:w-1/2 mb-10 md:mb-0">
+      <main className="w-screen  py-32 flex flex-col md:flex-row   items-center">
+        <div className="md:w-1/2 pl-20 mb-10 md:mb-0">
           <h2 className="text-teal-500 font-semibold mb-4">Welcome</h2>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
             Empowering Health with Expert Care and Compassion

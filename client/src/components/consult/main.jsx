@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import '../../custom.css';
+import "../../custom.css";
 import Slide1 from "./slide1";
 import Slide2 from "./slide2";
-import Slide3 from "./slide3";
-import doc from '../../../public/img/hero.png';
-import { Link } from 'react-scroll';
+
+import doc from "../../assets/img/hero.png";
+
+import { Link } from "react-scroll";
 import EmergencyForm from "./EmergencyForm";
 
 const main = () => {
@@ -13,7 +14,7 @@ const main = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide(prevSlide => (prevSlide === 3 ? 1 : prevSlide + 1));
+      setCurrentSlide((prevSlide) => (prevSlide === 2 ? 1 : prevSlide + 1));
     }, 5000);
 
     return () => clearInterval(interval); // Clean up the interval on component unmount
@@ -25,13 +26,13 @@ const main = () => {
 
   return (
     <div className="h-full">
-      <div className="flex lg:mt-10">
+      <div className="flex justify-center md:mt-20">
         <div className="md:w-6/12 bg-white p-8 xl:p-20 md:p-12 justify-center items-center">
           {!showForm ? (
             <>
               {currentSlide === 1 && <Slide1 />}
               {currentSlide === 2 && <Slide2 />}
-              {currentSlide === 3 && <Slide3 />}
+              {/* {currentSlide === 3 && <Slide3 />} */}
               <Link
                 to="appointmentForm"
                 smooth={true}
