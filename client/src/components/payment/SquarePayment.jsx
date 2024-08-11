@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
+  const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   return (
@@ -17,7 +18,7 @@ const Payment = () => {
           console.log("verifiedBuyer:", verifiedBuyer);
           console.log(JSON.stringify(token));
           const response = await axios.post(
-            "http://localhost:5001/api/appointment/payment",
+            `${apiUrl}/api/appointment/payment`,
             {
               appointmentId: localStorage.getItem("appointmentId"),
               sourceId: token.token,
@@ -31,7 +32,8 @@ const Payment = () => {
           setMessage(response.data.message);
           console.log(response.status);
           if (response.status === 200) {
-            window.location.replace(response.data.roomUrl);
+            window.location.href = response.data.roomUrl;
+            // window.location.replace(response.data.roomUrl);
             // window.location.href(response.data.roomUrl);
           }
         }}

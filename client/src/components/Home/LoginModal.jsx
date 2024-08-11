@@ -4,6 +4,7 @@ import RegisterModal from "./RegisterModal";
 import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ onClose }) => {
+  const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
   const navigate = useNavigate();
   const [loginType, setLoginType] = useState("patient");
   const [formData, setFormData] = useState({
@@ -20,14 +21,11 @@ const LoginModal = ({ onClose }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setResponseMessage("");
-  
+
     try {
       let res;
       if (loginType === "patient") {
-        res = await axios.post(
-          "http://localhost:5001/api/user/login",
-          formData
-        );
+        res = await axios.post(`${apiUrl}/api/user/login`, formData);
         localStorage.setItem("userToken", res.data.token);
         setResponseMessage("Login successful!");
         setTimeout(() => {
@@ -35,10 +33,7 @@ const LoginModal = ({ onClose }) => {
           navigate("/consult"); 
         }, 2000);
       } else if (loginType === "doctor") {
-        res = await axios.post(
-          "http://localhost:5001/api/doctor/login",
-          formData
-        );
+        res = await axios.post(`${apiUrl}/api/doctor/login`, formData);
         localStorage.setItem("doctorToken", res.data.token);
         setResponseMessage("Login successful!");
         setTimeout(() => {
@@ -51,12 +46,9 @@ const LoginModal = ({ onClose }) => {
         return;
       }
     } catch (error) {
-      setResponseMessage(
-        error.response?.data?.message || "An error occurred"
-      );
+      setResponseMessage(error.response?.data?.message || "An error occurred");
     }
   };
-  
 
   const handleNavigateToRegister = () => {
     setShowRegisterModal(true);

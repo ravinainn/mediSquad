@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const RegisterModal = ({ onClose, onNavigateToLogin }) => {
+  const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
   const [isDoctor, setIsDoctor] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    phone: '',
-    gender: '',
-    aadhar: '',
-    speciality: '',
-    licenseNumber: '',
-    passKey: '',
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    gender: "",
+    aadhar: "",
+    speciality: "",
+    licenseNumber: "",
+    passKey: "",
   });
-  const [responseMessage, setResponseMessage] = useState('');
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,26 +26,20 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
     try {
       let res;
       if (isDoctor) {
-        res = await axios.post(
-          "http://localhost:5001/api/doctor/register",
-          {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-            speciality: formData.speciality,
-            licenseNumber: formData.licenseNumber,
-            passKey: formData.passKey,
-          }
-        );
+        res = await axios.post(`${apiUrl}/api/doctor/register`, {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          speciality: formData.speciality,
+          licenseNumber: formData.licenseNumber,
+          passKey: formData.passKey,
+        });
       } else {
-        res = await axios.post(
-          "http://localhost:5001/api/user/register",
-          {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-          }
-        );
+        res = await axios.post(`${apiUrl}/api/user/register`, {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
       }
       // setResponseMessage(`Success! Token: ${res.data.token}`);
       setResponseMessage(`Registration successfully`);
@@ -72,13 +67,17 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
         {/* Toggle User Type */}
         <div className="mb-4 flex justify-center">
           <button
-            className={`px-4 py-2 rounded-l-lg ${!isDoctor ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+            className={`px-4 py-2 rounded-l-lg ${
+              !isDoctor ? "bg-teal-500 text-white" : "bg-gray-200 text-gray-600"
+            }`}
             onClick={() => setIsDoctor(false)}
           >
             User
           </button>
           <button
-            className={`px-4 py-2 rounded-r-lg ${isDoctor ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+            className={`px-4 py-2 rounded-r-lg ${
+              isDoctor ? "bg-teal-500 text-white" : "bg-gray-200 text-gray-600"
+            }`}
             onClick={() => setIsDoctor(true)}
           >
             Doctor
@@ -88,7 +87,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
         {/* Form Fields */}
         <form onSubmit={handleRegister}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-bold mb-2"
+            >
               Name
             </label>
             <input
@@ -102,7 +104,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-bold mb-2"
+            >
               Email
             </label>
             <input
@@ -116,7 +121,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-bold mb-2"
+            >
               Password
             </label>
             <input
@@ -134,7 +142,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
           {!isDoctor && (
             <>
               <div className="mb-4">
-                <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="phone"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Phone Number
                 </label>
                 <input
@@ -147,7 +158,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="gender" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="gender"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Gender
                 </label>
                 <select
@@ -164,7 +178,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
                 </select>
               </div>
               <div className="mb-4">
-                <label htmlFor="aadhar" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="aadhar"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Aadhaar Number
                 </label>
                 <input
@@ -183,7 +200,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
           {isDoctor && (
             <>
               <div className="mb-4">
-                <label htmlFor="speciality" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="speciality"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Speciality
                 </label>
                 <input
@@ -197,7 +217,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="licenseNumber" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="licenseNumber"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   License Number
                 </label>
                 <input
@@ -211,7 +234,10 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="passKey" className="block text-gray-700 font-bold mb-2">
+                <label
+                  htmlFor="passKey"
+                  className="block text-gray-700 font-bold mb-2"
+                >
                   Pass Key
                 </label>
                 <input
