@@ -29,14 +29,14 @@ const HeroSection = () => {
           <a href="#" className="text-gray-600 hover:text-gray-800">
             Home
           </a>
-          <a href="#" className="text-gray-600 hover:text-gray-800">
+          {/* <a href="#" className="text-gray-600 hover:text-gray-800">
             Product
-          </a>
+          </a> */}
           <a href="#" className="text-gray-600 hover:text-gray-800">
             About
           </a>
           <a href="#" className="text-gray-600 hover:text-gray-800">
-            Contact
+            ChatBot
           </a>
         </nav>
         <div className="flex items-center space-x-4">

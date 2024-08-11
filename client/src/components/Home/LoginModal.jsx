@@ -32,7 +32,7 @@ const LoginModal = ({ onClose }) => {
         setResponseMessage("Login successful!");
         setTimeout(() => {
           onClose();
-          navigate("/consult"); // Navigate to /consult after patient login
+          navigate("/consult"); 
         }, 2000);
       } else if (loginType === "doctor") {
         res = await axios.post(
@@ -43,7 +43,7 @@ const LoginModal = ({ onClose }) => {
         setResponseMessage("Login successful!");
         setTimeout(() => {
           onClose();
-          navigate("/doctor-dashboard"); // Navigate to /doctor-dashboard after doctor login
+          navigate("/doctor-dashboard"); 
         }, 2000);
       } else {
         // Handle admin login
