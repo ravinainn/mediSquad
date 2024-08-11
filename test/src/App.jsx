@@ -10,6 +10,8 @@ import DoctorLogout from "./components/DoctorLogout";
 import DoctorRegister from "./components/DoctorRegister";
 import UserLogout from "./components/UserLogout";
 
+import Payment from "./components/SquarePayment";
+
 function App() {
   return (
     <Router>
@@ -53,6 +55,7 @@ function App() {
           <Route path="/user-reg" element={<UserRegister />} />
           <Route path="/doctor-logout" element={<DoctorLogout />} />
           <Route path="/user-logout" element={<UserLogout />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </div>
     </Router>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateAppointment = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,7 @@ const CreateAppointment = () => {
     aadharNumber: "",
     speciality: "",
   });
-
+  const navigate = useNavigate();
   const [roomUrl, setRoomUrl] = useState("");
 
   const handleChange = (e) => {
@@ -30,7 +31,11 @@ const CreateAppointment = () => {
           },
         }
       );
+
       setRoomUrl(res.data.roomUrl);
+      console.log(res.data);
+      localStorage.setItem("appointmentId", res.data.appointmentId);
+      navigate("/payment");
     } catch (error) {
       console.error("Error creating appointment:", error);
     }

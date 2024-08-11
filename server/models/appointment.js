@@ -24,7 +24,7 @@ const AppSchema = new Schema({
   },
   doctor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Doctor",
   },
   createdAt: {
     type: Date,

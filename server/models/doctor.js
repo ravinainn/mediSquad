@@ -35,10 +35,14 @@ const DoctorSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  status: {
-    type: String,
-    enum: ["active", "inactive"],
-    default: "inactive",
+  active: {
+    type: Boolean,
+
+    default: false,
+  },
+  patient: {
+    type: Number,
+    default: 0,
   },
 });
 DoctorSchema.pre("save", async function (next) {

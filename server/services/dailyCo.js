@@ -11,7 +11,8 @@ export const createRoom = async () => {
           max_participants: 2,
           enable_chat: true,
           enable_knocking: true,
-          exp: Math.round(Date.now() / 1000) + 60 * 10,
+          //   enable_pip_join: true,
+          exp: Math.round(Date.now() / 1000) + 60 * 60,
         },
       },
       {

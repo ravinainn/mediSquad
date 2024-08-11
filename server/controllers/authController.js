@@ -48,10 +48,12 @@ export const DoctorLogin = async (req, res) => {
     if (!doctor) {
       return res.status(404).json({ message: "Invalid Credentials." });
     }
+    await Doctor.findByIdAndUpdate(doctor._id, { active: true });
     const isMatch = await doctor.comparePassword(password);
     if (!isMatch) {
       return res.status(404).json({ message: "Invalid Credentials." });
     }
+
     const token = signToken(doctor._id);
     res.status(200).json({
       token,
@@ -72,7 +74,7 @@ export const doctorLogout = async (req, res) => {
     // Find the doctor by ID and update the status to 'inactive'
     const doctor = await Doctor.findByIdAndUpdate(
       doctorId,
-      { status: "inactive" },
+      { active: false },
       { new: true }
     );
 
@@ -82,7 +84,7 @@ export const doctorLogout = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Logged out successfully", status: doctor.status });
+      .json({ message: "Logged out successfully", status: doctor.active });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }

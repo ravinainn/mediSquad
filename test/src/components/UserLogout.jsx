@@ -18,7 +18,6 @@ const UserLogout = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       // Clear the token from localStorage and navigate to the login page
       localStorage.removeItem("userToken");
       alert(res.data.message);
