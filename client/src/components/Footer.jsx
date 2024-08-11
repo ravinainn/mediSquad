@@ -74,7 +74,7 @@ const Footer = () => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-              <span>A-4201 Shaitan gali khatra mehel, New Delhi-110069, India</span>
+              <span>A-4201 MDS Building District park road, New Delhi-110069, India</span>
             </li>
             <li className="flex items-center">
             <svg
