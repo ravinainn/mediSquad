@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileScreen = ({ userDetails, onSave, onCancel }) => {
   const [editField, setEditField] = useState(null);
@@ -78,12 +80,13 @@ const EditProfileScreen = ({ userDetails, onSave, onCancel }) => {
 };
 
 const ProfileDashboard = ({ onClose }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
   const [userDetails, setUserDetails] = useState({
     name: 'Chota Chetan',
     email: 'chota.chetan@gmail.com',
     phone: '01125532553',
-    aadhaar: '1234 5678 9012',
+    aadhaar: '123456789012',
   });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -94,13 +97,32 @@ const ProfileDashboard = ({ onClose }) => {
 
   const handleSaveProfile = (updatedDetail) => {
     setUserDetails(prev => ({ ...prev, ...updatedDetail }));
-    // Here you would typically send the updated details to your backend
+    // typically send this updated details to backend
     console.log('Profile updated', updatedDetail);
   };
 
-  const handleDeactivate = () => {
-    // Handle account deactivation logic here
-    console.log('Account deactivation requested');
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        alert("No user is logged in");
+        return;
+      }
+
+      const res = await axios.get("http://localhost:5001/api/user/logout", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      localStorage.removeItem("userToken");
+      alert(res.data.message);
+      onClose(); // Close the profile dashboard
+      navigate("/"); // Redirect to home page
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Error logging out");
+    }
   };
 
   return (
@@ -140,8 +162,8 @@ const ProfileDashboard = ({ onClose }) => {
                 <button onClick={() => setIsEditing(true)} className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
                   Edit Profile
                 </button>
-                <button onClick={handleDeactivate} className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
-                  Deactivate Account
+                <button onClick={handleLogout} className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                  Log out
                 </button>
               </div>
             </div>
