@@ -46,13 +46,15 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
           }
         );
       }
-      setResponseMessage(`Success! Token: ${res.data.token}`);
+      // setResponseMessage(`Success! Token: ${res.data.token}`);
+      setResponseMessage(`Registration successfully`);
       setTimeout(() => {
         onClose();
         onNavigateToLogin();
       }, 2000);
     } catch (error) {
-      setResponseMessage(error.response?.data?.message || "An error occurred");
+      // setResponseMessage(error.response?.data?.message || "An error occurred");
+      setResponseMessage(`Account already exists.`);
     }
   };
 
