@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import RegisterModal from "./RegisterModal";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ onClose }) => {
+  const navigate = useNavigate();
   const [loginType, setLoginType] = useState("patient");
   const [formData, setFormData] = useState({
     email: "",
@@ -27,22 +29,26 @@ const LoginModal = ({ onClose }) => {
           formData
         );
         localStorage.setItem("userToken", res.data.token);
+        setResponseMessage("Login successful!");
+        setTimeout(() => {
+          onClose();
+        }, 2000);
       } else if (loginType === "doctor") {
         res = await axios.post(
           "http://localhost:5001/api/doctor/login",
           formData
         );
         localStorage.setItem("doctorToken", res.data.token);
+        setResponseMessage("Login successful!");
+        setTimeout(() => {
+          onClose();
+          navigate("/doctor-dashboard");
+        }, 2000);
       } else {
         // Handle admin login
         console.log("Admin login not implemented yet");
         return;
       }
-      
-      setResponseMessage("Login successful!");
-      setTimeout(() => {
-        onClose();
-      }, 2000);
     } catch (error) {
       setResponseMessage(
         error.response?.data?.message || "An error occurred"

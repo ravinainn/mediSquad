@@ -33,7 +33,7 @@ const HeroSection = () => {
             Product
           </a>
           <a href="#" className="text-gray-600 hover:text-gray-800">
-            Pricing
+            About
           </a>
           <a href="#" className="text-gray-600 hover:text-gray-800">
             Contact
