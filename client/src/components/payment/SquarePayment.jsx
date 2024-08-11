@@ -32,7 +32,8 @@ const Payment = () => {
           setMessage(response.data.message);
           console.log(response.status);
           if (response.status === 200) {
-            window.location.replace(response.data.roomUrl);
+            window.location.href = response.data.roomUrl;
+            // window.location.replace(response.data.roomUrl);
             // window.location.href(response.data.roomUrl);
           }
         }}
