@@ -32,7 +32,7 @@ const ChatBox = () => {
         sender: "bot",
         timestamp: "Just now",
       };
-
+      setInputMessage("");
       setMessages((prevMessages) => [...prevMessages, userMessage, botMessage]);
     } catch (error) {
       console.error("Error sending message:", error);

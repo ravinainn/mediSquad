@@ -48,8 +48,8 @@ const RegisterModal = ({ onClose, onNavigateToLogin }) => {
         onNavigateToLogin();
       }, 2000);
     } catch (error) {
-      // setResponseMessage(error.response?.data?.message || "An error occurred");
-      setResponseMessage(`Account already exists.`);
+      setResponseMessage(error.response?.data?.message || "An error occurred");
+      // setResponseMessage(`Account already exists.`);
     }
   };
 
