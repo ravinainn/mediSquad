@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
   const handleChatBotClick = () => {
     navigate("/chatbot");
   };
@@ -20,7 +20,7 @@ const Header = () => {
       }
 
       // Send the logout request to the backend
-      const res = await axios.get("http://localhost:5001/api/doctor/logout", {
+      const res = await axios.get(`${apiUrl}/api/doctor/logout`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,10 +44,16 @@ const Header = () => {
           <a className="text-gray-600 hover:text-teal-600 cursor-pointer">
             Home
           </a>
-          <a className="text-gray-600 hover:text-teal-600 cursor-pointer" onClick={handleAbout}>
+          <a
+            className="text-gray-600 hover:text-teal-600 cursor-pointer"
+            onClick={handleAbout}
+          >
             About
           </a>
-          <a  className="text-gray-600 hover:text-teal-600 cursor-pointer" onClick={handleChatBotClick} >
+          <a
+            className="text-gray-600 hover:text-teal-600 cursor-pointer"
+            onClick={handleChatBotClick}
+          >
             ChatBot
           </a>
         </nav>
