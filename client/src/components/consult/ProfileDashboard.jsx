@@ -83,10 +83,10 @@ const ProfileDashboard = ({ onClose }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
   const [userDetails, setUserDetails] = useState({
-    name: 'Bhupendar jogi',
-    email: 'bhupendar.jogi@gmail.com',
-    phone: '01125532553',
-    aadhaar: '123456789012',
+    name: 'Sameer Joshi',
+    email: 'sameer@gmail.com',
+    phone: '9829519588',
+    aadhaar: '1234567890',
   });
   const [isEditing, setIsEditing] = useState(false);
 
