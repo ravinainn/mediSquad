@@ -18,7 +18,7 @@ export const createRoom = async () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 256004953c5ae436c9d50ca0f190e744d875ebad451f7e74772b0a8f031cdc64`,
+          Authorization: `Bearer d38441ab16bc5895e931a41647debdb882369454d5b22c3dc1e7f503a987ba16`,
         },
       }
     );
